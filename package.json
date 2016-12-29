@@ -1,0 +1,23 @@
+{
+  "name": "algodesign",
+  "version": "1.0.0",
+  "description": "Working through the Algorithm Design Manual in languages I know and want to improve on",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JPZ13/algorithmdesign.git"
+  },
+  "author": "J.P. Zivalich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JPZ13/algorithmdesign/issues"
+  },
+  "homepage": "https://github.com/JPZ13/algorithmdesign#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
