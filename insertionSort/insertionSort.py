@@ -1,8 +1,10 @@
 def insertion_sort( arr ):
-    for i in arr:
-        j = i
-        while j > 0 and arr[ j ] < arr[ j - 1 ]:
-            swap = arr[ j ]
-            arr[ j ] = arr[ j - 1 ]
-            arr[ j - 1 ] = swap
-            j = j - 1
+    for index in range(1, len(arr)):
+        current_value = arr[index]
+        position = index
+        while position > 0 and arr[position - 1] > current_value:
+            arr[position] = arr[position - 1]
+            position = position - 1
+
+        arr[ position ] = current_value
+    return arr
