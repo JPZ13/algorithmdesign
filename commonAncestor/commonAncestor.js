@@ -65,5 +65,43 @@ const commonAnsRec = ( nodeOne, nodeTwo ) => {
   return null;
 };
 
+const commonAnsIt = ( nodeOne, nodeTwo ) => {
+
+  while ( nodeOne !== nodeTwo && nodeOne.parent !== null && nodeTwo.parent !== null && nodeOne.parent !== nodeTwo && nodeTwo.parent !== nodeOne ) {
+    
+    
+    if ( nodeOne.height === nodeTwo.height && nodeOne.parent !== null && nodeTwo.parent !== null ) {
+      nodeOne = nodeOne.parent;
+      nodeTwo = nodeTwo.parent;
+    } else if ( nodeOne.height > nodeTwo.height && nodeOne.parent !== null ) {
+      nodeOne = nodeOne.parent;
+    } else if ( nodeTwo.height > nodeOne.height && nodeTwo.parent !== null ) {
+      nodeTwo = nodeTwo.parent;
+    }
+    
+    if ( nodeOne.parent === null && nodeTwo.parent === null && nodeOne !== nodeTwo ) {
+      return null;
+    }
+
+  }
+  
+  if ( nodeOne.parent === nodeTwo.parent ) {
+    return nodeOne.parent;
+  }
+
+  if ( nodeOne.parent === nodeTwo ) {
+    return nodeTwo;
+  }
+
+  if ( nodeTwo.parent === nodeOne ) {
+    return nodeOne;
+  }
+
+  if ( nodeOne === nodeTwo ) {
+    return nodeOne;
+  }
+};
+
 module.exports.BT = BT;
 module.exports.commonAnsRec = commonAnsRec;
+module.exports.commonAnsIt = commonAnsIt;
