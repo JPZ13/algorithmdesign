@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var poolTerrain = require('./poolTerrain').poolTerrain;
-var inPool = require('./poolTerrain').inPool;
+var dikjstra = require('./poolTerrain').dikjstra;
 
 var poolOne = [
   [ 5, 5, 5, 5, 5 ],
@@ -26,15 +26,8 @@ var poolThree = [
   [ 5, 5, 5, 5, 5 ]
 ];
 
-describe('Min Max helper function', function() {
-
-  it('Should return the limiting height', function() {
-    expect( poolOne, 1, 1 ).to.equal( 3 );
-    expect( poolOne, 1, 2 ).to.equal( 3 );
-    expect( poolOne, 2, 1 ).to.equal( 3 );
-  });
-
-  it('Should return false when a limit doesn\'t exit');
+describe('Dikjstra Modified', function() {
+  expect( dikjstra( poolOne, 2, 1 ) ).to.equal( 5 );
 });
 
 describe('Pool Terrain', function() {
