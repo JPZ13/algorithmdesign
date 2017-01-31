@@ -42,7 +42,7 @@ const dynoKnap = ( knapSack, limit ) => {
   let mX = matrix[ mY ].length - 1;
 
   while ( mX > 0 || mY > 0 ) {
-    if ( matrix[ mY - 1 ][ mX ] !== undefined && matrix[ mY - 1 ][ mX ] >= matrix[ mY ][ mX ] ) {
+    if ( mY > 0 && matrix[ mY - 1 ][ mX ] >= matrix[ mY ][ mX ] ) {
       mY = mY - 1;
     } else {
       resultSack.push( knapSack[ mY ] );
