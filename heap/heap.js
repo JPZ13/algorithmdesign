@@ -80,6 +80,11 @@ class BinaryHeap {
   }
 
   removeRoot() {
+
+    if ( this.size() === 1 ) {
+      return this.heap.pop();
+    }
+    
     let result = this.heap[ 0 ];
     this.heap[ 0 ] = this.pop();
     this.bubbleUp( this.size() - 1 );
