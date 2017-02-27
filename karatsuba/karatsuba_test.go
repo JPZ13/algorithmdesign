@@ -1,7 +1,7 @@
 package karatsuba
 
 import (
-	// "fmt"
+	"fmt"
 	"math/big"
 	"testing"
 )
@@ -55,16 +55,28 @@ func TestOps(t *testing.T) {
 	}
 }
 
-// func TestBig(t *testing.T) {
-// 	var bigOne int64
-// 	bigOne = 3141592653589793238462643383279502884197169399375105820974944592
-// 	var bigTwo int64
-// 	bigTwo = 2718281828459045235360287471352662497757247093699959574966967627
-// 	bigAf := Big(bigOne, bigTwo)
+func TestBig(t *testing.T) {
 
-// 	fmt.Println(bigAf)
+	karatOne := big.NewInt(314159)
+	karatTwo := big.NewInt(271828)
 
-// 	if bigAf == 7 {
-// 		t.Errorf("You broke it")
-// 	}
-// }
+	karatTest := Karatsuba(karatOne, karatTwo)
+
+	if karatTest.Cmp(big.NewInt(85397212652)) != 0 {
+		t.Error("Expected 85397212652 but got", karatTest.String())
+	}
+
+	bigOne, bigTwo := new(big.Int), new(big.Int)
+	bigOne.SetString("3141592653589793238462643383279502884197169399375105820974944592", 10)
+	bigTwo.SetString("2718281828459045235360287471352662497757247093699959574966967627", 10)
+	bigAf := Karatsuba(bigOne, bigTwo)
+	bigTest := big.NewInt(0).Mul(bigOne, bigTwo)
+
+	fmt.Println(bigOne.String())
+	fmt.Println(bigTwo.String())
+	fmt.Println(bigAf.String())
+	fmt.Println(bigTest.String())
+	if bigAf.Cmp(bigTest) != 0 {
+		t.Errorf("You broke it")
+	}
+}

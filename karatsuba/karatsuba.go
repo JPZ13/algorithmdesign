@@ -8,25 +8,27 @@ import (
 	// "strings"
 )
 
-// func takes intOne and intTwo
-// func Karatsuba(intOne, intTwo *big.Int) *big.Int {
-// 	if intOne.Cmp(big.NewInt(10)) < 1 || intTwo.Cmp(big.NewInt(10)) < 1 {
-// 		return big.Mul(intOne, intTwo)
-// 	}
+func Karatsuba(intOne, intTwo *big.Int) *big.Int {
+	if intOne.Cmp(big.NewInt(10)) < 1 || intTwo.Cmp(big.NewInt(10)) < 1 {
+		return mul(intOne, intTwo)
+	}
 
-// 	m := getSize(intOne) / 2
-// 	var B float64
-// 	B = 10
+	m := getPivot(intOne, intTwo)
+	var B float64
+	B = 10.0
 
-// 	a, b := halfNumbers(intOne, m)
-// 	c, d := halfNumbers(intTwo, m)
+	a, b := halfNumbers(intOne, m)
+	c, d := halfNumbers(intTwo, m)
 
-// 	zTwo := Karatsuba(a, c)
-// 	zOh := Karatsuba(b, d)
-// 	zOne := Karatsuba(a, d) + Karatsuba(b, c)
+	zTwo := Karatsuba(a, c)
+	zOh := Karatsuba(b, d)
+	zOne := add(Karatsuba(a, d), Karatsuba(b, c))
 
-// 	return zTwo*int64(math.Pow(B, float64(2*m))) + zOne*int64(math.Pow(B, float64(m))) + zOh
-// }
+	prodOne := mul(zTwo, big.NewInt(int64(math.Pow(B, 2.0*float64(m)))))
+	prodTwo := mul(zOne, big.NewInt(int64(math.Pow(B, float64(m)))))
+	sumOne := add(prodOne, prodTwo)
+	return add(sumOne, zOh)
+}
 
 func getPivot(numOne, numTwo *big.Int) int {
 	lenOne := len(numOne.String())
@@ -39,7 +41,7 @@ func getPivot(numOne, numTwo *big.Int) int {
 	}
 }
 
-func halfNumbers(num *big.Int, half uint) (*big.Int, *big.Int) {
+func halfNumbers(num *big.Int, half int) (*big.Int, *big.Int) {
 	denom := big.NewInt(int64(math.Pow(10, float64(half))))
 
 	left := big.NewInt(0).Div(num, denom)

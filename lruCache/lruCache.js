@@ -1,11 +1,26 @@
 var LRUCache = function(capacity) {
     this.cache = {};
-    this.store = Array(capacity);
+    this.store = {};
     this.count = 0;
     this.capacity = capacity;
-    this.full = false;
+    this.size = 0;
 };
 
+
+LRUCache.prototype.getMin = function() {
+
+  var resKey = null;
+
+  for ( var key in this.store ) {
+    if ( resKey === null ) {
+      resKey = key;
+    } else if ( this.store[key] < this.store[resKey] ) {
+      resKey = key
+    }
+  }
+
+  return resKey;
+}
 
 LRUCache.prototype.get = function(key) {
     
@@ -13,50 +28,29 @@ LRUCache.prototype.get = function(key) {
         return -1;
     }
     
-    // loop and find key in store and lowest index
-        // if found, update count
-    for ( var i = 0; i < this.store.length; i++ ) {
-        if ( this.store[i] !== undefined && this.store[i].key === key ) {
-            this.store[i].count = this.count;
-            break;
-        }
-    }
-    
+    this.store[ key ] = this.count;
     this.count++;
-    
+
     return this.cache[key]
 };
 
 
 LRUCache.prototype.put = function(key, value) {
-    
-    if ( !(key in this.cache) && this.full ) {
-        var lrIndex = this.store.reduce(function(memo, item) {
-            if ( item.count < memo.count ) {
-                memo = item;
-            }
-            return memo;
-        }, this.store[0]).index;
-        
-        delete this.cache[ this.store[lrIndex].key ]
-        this.store[lrIndex] = {key: key, count: this.count, index: lrIndex}
-        
-    } else if ( this.full ) {
-        for ( var i = 0; i < this.store.length; i++ ) {
-            if ( this.store[i] !== undefined && this.store[i].key === key ) {
-                this.store[i].count = this.count;
-                break;
-            }
-        }
-    } else {
-        this.store[this.count] = {key: key, count: this.count, index: this.count};
-        if ( this.count >= this.capacity - 1 ) {
-            this.full = true;
-        }
+
+    if ( !( key in this.store ) ) {
+      this.size++
     }
-    this.cache[key] = value;
-    this.count++; 
-    
+  
+    if ( this.size > this.capacity ) {
+      var min = this.getMin();
+      delete this.cache[ min ];
+      delete this.store[ min ];
+      this.size--;
+    }   
+    this.cache[ key ] = value;
+    this.store[ key ] = this.count;
+
+    this.count++;
 };
 
 module.exports = LRUCache
